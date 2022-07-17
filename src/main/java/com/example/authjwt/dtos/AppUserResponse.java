@@ -10,4 +10,11 @@ public class AppUserResponse {
   private long id;
   private String nome;
   private String email;
+
+  public AppUserResponse(long id, String nome, String email) {
+    this.id = id;
+    this.nome = nome;
+    this.email = email;
+  }
+
 }

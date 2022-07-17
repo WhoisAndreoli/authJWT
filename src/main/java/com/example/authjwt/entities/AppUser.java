@@ -4,8 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -21,5 +19,11 @@ public class AppUser {
   private String name;
   private String email;
   private String password;
+
+  public AppUser(String name, String email, String password) {
+    this.name = name;
+    this.email = email;
+    this.password = password;
+  }
 
 }
