@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    username: Andre
+    password: root
+    url: jdbc:postgresql://localhost:5432/authjwt
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
