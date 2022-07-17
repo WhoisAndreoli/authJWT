@@ -18,13 +18,8 @@ public class AppUser {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
-
   private String name;
-
-  @Email
   private String email;
-
-  @Min(value = 5)
   private String password;
 
 }
