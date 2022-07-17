@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 public class AppUserServiceImpl implements AppUserService {
 
-  private AppUserRepository appUserRepository;
+  private final AppUserRepository appUserRepository;
 
   @Override
   public AppUserResponse createUser(AppUserRequest appUserRequest) {
