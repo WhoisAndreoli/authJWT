@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.example.authjwt.config.JWT.JwtFilter;
+import com.example.authjwt.config.JWT.JwtValidation;
 
 @EnableWebSecurity(debug = true)
 public class SecutiryConfig {
@@ -30,6 +31,7 @@ public class SecutiryConfig {
       JwtFilter jwtFilter = new JwtFilter(authenticationManager);
       jwtFilter.setFilterProcessesUrl("/users/login");
       http.addFilter(jwtFilter);
+      http.addFilterBefore(new JwtValidation(), JwtFilter.class);
     }
 
     public static MyCustomDsl customDsl() {
