@@ -12,11 +12,19 @@ import lombok.RequiredArgsConstructor;
 public class AppUserRequest {
 
   @NotEmpty
-  private String nome;
+  private String name;
   @Email
   @NotEmpty
   private String email;
   @Size(min = 5, message = "A senha precisa ter no minimo 5 caracteres")
   @NotEmpty
   private String password;
+
+  public AppUserRequest(@NotEmpty String name, @Email @NotEmpty String email,
+      @Size(min = 5, message = "A senha precisa ter no minimo 5 caracteres") @NotEmpty String password) {
+    this.name = name;
+    this.email = email;
+    this.password = password;
+  }
+
 }

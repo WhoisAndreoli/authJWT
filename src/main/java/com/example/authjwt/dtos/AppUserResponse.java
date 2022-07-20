@@ -8,12 +8,12 @@ import lombok.RequiredArgsConstructor;
 public class AppUserResponse {
 
   private long id;
-  private String nome;
+  private String name;
   private String email;
 
-  public AppUserResponse(long id, String nome, String email) {
+  public AppUserResponse(long id, String name, String email) {
     this.id = id;
-    this.nome = nome;
+    this.name = name;
     this.email = email;
   }
 

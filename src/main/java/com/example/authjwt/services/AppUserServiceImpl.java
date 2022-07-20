@@ -33,7 +33,7 @@ public class AppUserServiceImpl implements AppUserService {
     if (appUserRepository.findByEmail(appUserRequest.getEmail()).isPresent()) {
       throw new EmailAlreadyUsedException("O email escolhido ja esta sendo usado!");
     } else {
-      AppUser user = new AppUser(appUserRequest.getNome(), appUserRequest.getEmail(), appUserRequest.getPassword());
+      AppUser user = new AppUser(appUserRequest.getName(), appUserRequest.getEmail(), appUserRequest.getPassword());
       user.setPassword(encoder.encode(user.getPassword()));
       user = appUserRepository.save(user);
       return new AppUserResponse(user.getId(), user.getName(), user.getEmail());
