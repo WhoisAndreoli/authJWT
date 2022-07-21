@@ -23,6 +23,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.example.authjwt.dtos.AppUserRequest;
 import com.example.authjwt.dtos.AppUserResponse;
 import com.example.authjwt.entities.AppUser;
+import com.example.authjwt.exceptions.EmailAlreadyUsedException;
 import com.example.authjwt.repositories.AppUserRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -39,22 +40,23 @@ public class AppUserServiceImplTest {
   @Nested
   class SaveUser {
 
-    @BeforeEach
-    void setUp() {
-      AppUser user = createAppUser();
-      when(appUserRepository.save(any(AppUser.class))).thenReturn(user);
-    }
-
     @Test
     void createUser_ShouldReturnsUserResponse_WhenSuccessful() {
-      AppUserRequest userRequest = new AppUserRequest("Andre", "andre@hotmail.com",
-          "12345");
+      when(appUserRepository.save(any(AppUser.class))).thenReturn(createAppUser());
+      AppUserRequest userRequest = createAppUserRequest();
       AppUserResponse userSaved = appUserServiceImpl.createUser(userRequest);
 
       assertThat(userSaved).isNotNull();
       assertThat(userSaved.getId()).isEqualTo(1);
       assertThat(userSaved.getName()).isEqualTo(userRequest.getName());
       assertThat(userSaved.getEmail()).isEqualTo(userRequest.getEmail());
+    }
+
+    @Test
+    void createUser_ShouldThrowExeception_WhenEmailAlreadyUsed() {
+      when(appUserRepository.save(any(AppUser.class))).thenThrow(EmailAlreadyUsedException.class);
+      AppUserRequest user = createAppUserRequest();
+      assertThrows(EmailAlreadyUsedException.class, () -> appUserServiceImpl.createUser(user));
     }
   }
 
@@ -63,8 +65,7 @@ public class AppUserServiceImplTest {
 
     @BeforeEach
     void setUp() {
-      AppUser user = createAppUser();
-      when(appUserRepository.findAll()).thenReturn(List.of(user));
+      when(appUserRepository.findAll()).thenReturn(List.of(createAppUser()));
     }
 
     @Test
@@ -82,8 +83,7 @@ public class AppUserServiceImplTest {
 
     @Test
     void loadByUsername_ShouldReturnsUserDetail_WhenSuccessful() {
-      AppUser user = createAppUser();
-      when(appUserRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
+      when(appUserRepository.findByEmail(anyString())).thenReturn(Optional.of(createAppUser()));
       UserDetails userDetails = appUserServiceImpl.loadUserByUsername("andre@hotmail.com");
 
       assertThat(userDetails).isNotNull().isInstanceOf(UserDetails.class);
@@ -102,5 +102,9 @@ public class AppUserServiceImplTest {
   public AppUser createAppUser() {
     return new AppUser(1, "Andre", "andre@hotmail.com",
         "12345");
+  }
+
+  public AppUserRequest createAppUserRequest() {
+    return new AppUserRequest("Andre", "andre@hotmail.com", "12345");
   }
 }
