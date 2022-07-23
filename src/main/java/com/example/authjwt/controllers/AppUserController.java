@@ -40,4 +40,5 @@ public class AppUserController {
   public ResponseEntity<String> login(@RequestBody @Valid LoginRequest loginRequest) {
     return new ResponseEntity<>("Login bem sucedido", HttpStatus.ACCEPTED);
   }
+
 }

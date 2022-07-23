@@ -31,8 +31,9 @@ public class AppUserServiceImplTest {
 
   @Mock
   private AppUserRepository appUserRepository;
+
   @Mock
-  private BCryptPasswordEncoder encoder;
+  BCryptPasswordEncoder encoder;
 
   @InjectMocks
   private AppUserServiceImpl appUserServiceImpl;

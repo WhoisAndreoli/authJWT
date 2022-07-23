@@ -19,9 +19,10 @@ public class SecutiryConfig {
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     return http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-        .authorizeRequests().antMatchers(HttpMethod.GET).authenticated().anyRequest().permitAll().and()
-        .apply(MyCustomDsl.customDsl()).and()
-        .httpBasic().and().build();
+        .authorizeRequests().antMatchers(HttpMethod.GET, "/users").authenticated()
+        .anyRequest().permitAll()
+        .and().apply(MyCustomDsl.customDsl()).and()
+        .build();
   }
 
   public static class MyCustomDsl extends AbstractHttpConfigurer<MyCustomDsl, HttpSecurity> {
